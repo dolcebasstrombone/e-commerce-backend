@@ -3,6 +3,8 @@ const { isError } = require("lodash");
 const { Tag, Product, ProductTag } = require("../../models");
 
 // The `/api/tags` endpoint
+// minor bug: json objects include snake case and camel case versions of each column.
+// the data is still correct, bug is low priority
 
 // find all tags
 router.get("/", (req, res) => {
