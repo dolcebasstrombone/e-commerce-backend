@@ -2,6 +2,8 @@
 
 ## About
 
+This application is the back-end for an e-commerce web app. Technologies used include Node.js, Express.js, MySql, and Sequelize.
+
 ## Installation
 
 To install this application:
