@@ -7,7 +7,7 @@ const { Product, Category, Tag, ProductTag } = require("../../models");
 router.get("/", (req, res) => {
   Product.findAll({
     include: [
-      Category, 
+      Category,
       {
         model: Tag,
         through: ProductTag,
@@ -25,20 +25,21 @@ router.get("/:id", (req, res) => {
       id: req.params.id,
     },
     include: [
-      Category, 
+      Category,
       {
         model: Tag,
         through: ProductTag,
       },
     ],
-  }).then((oneProductData) => {
-    if (!oneProductData) {
-      res.status(404).json({ message: "ID not found" });
-      return;
-    }
-  });
-  // find a single product by its `id`
-  // be sure to include its associated Category and Tag data
+  })
+    .then((oneProductData) => {
+      if (!oneProductData) {
+        res.status(404).json({ message: "ID not found" });
+        return;
+      }
+      res.json(oneProductData);
+    })
+    .catch((err) => res.status(500).json(err));
 });
 
 // create new product
@@ -115,8 +116,21 @@ router.put("/:id", (req, res) => {
     });
 });
 
+// delete one product by its `id` value
 router.delete("/:id", (req, res) => {
-  // delete one product by its `id` value
+  Product.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((deletedProductData) => {
+      if (!deletedProductData) {
+        res.status(404).json({ message: "ID not found" });
+        return;
+      }
+      res.json(deletedProductData);
+    })
+    .catch((err) => res.status(500).json(err));
 });
 
 module.exports = router;
